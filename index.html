@@ -13,7 +13,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f2f6f9;
+      background: #e0f0ff;
       color: #333;
     }
 
@@ -42,18 +42,19 @@
       text-align: center;
     }
 
-    h1 {
+    h1, h2 {
       margin-bottom: 15px;
-      font-size: 26px;
+      font-size: 24px;
       color: #2c3e50;
     }
 
     p {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-size: 16px;
     }
 
-    input[type="date"] {
+    input[type="date"],
+    input[type="number"] {
       padding: 12px;
       width: 100%;
       font-size: 16px;
@@ -72,6 +73,7 @@
       font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      margin-bottom: 20px;
     }
 
     button:hover {
@@ -85,69 +87,6 @@
       color: #2c3e50;
     }
 
-    /* Responsividade */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 15px 20px;
-      }
-
-      header img {
-        height: 50px;
-        max-width: 80px;
-      }
-
-      .container {
-        margin: 30px 15px;
-        padding: 30px 20px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      p, .resultado {
-        font-size: 16px;
-      }
-
-      button {
-        font-size: 15px;
-        padding: 12px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background-color: #ffffff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    header img {
-    max-height: 80px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    }
-
-      .container {
-        padding: 25px 15px;
-      }
-
-      h1 {
-        font-size: 20px;
-      }
-
-      button {
-        font-size: 14px;
-        padding: 10px;
-      }
-    }
-
     footer {
       background-color: #ffffff;
       color: #555;
@@ -155,7 +94,18 @@
       padding: 20px;
       font-size: 14px;
       box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-      margin-top: 60px;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 30px 15px;
+        padding: 30px 20px;
+      }
+
+      h1, h2 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -170,8 +120,24 @@
     <p>Informe a data da última menstruação (DUM):</p>
     <input type="date" id="dataDum">
     <button onclick="calcularSemanas()">Calcular</button>
+
+    <hr style="margin: 30px 0;">
+
+    <h2>Ou informe a data de referência e semanas/dias:</h2>
+    <p>Data de referência:</p>
+    <input type="date" id="dataReferencia">
+    <p>Semanas:</p>
+    <input type="number" id="semanasRef" min="0" placeholder="Ex: 10">
+    <p>Dias:</p>
+    <input type="number" id="diasRef" min="0" max="6" placeholder="Ex: 3">
+    <button onclick="calcularPorReferencia()">Calcular por Referência</button>
+
     <div class="resultado" id="resultado"></div>
   </div>
+
+  <footer>
+    <p>© 2025 - Desenvolvido por Murilo Della Justina</p>
+  </footer>
 
   <script>
     function calcularSemanas() {
@@ -196,10 +162,36 @@
       document.getElementById("resultado").innerText = 
         `A paciente está com ${semanas} semana(s) e ${diasRestantes} dia(s) de gestação.`;
     }
+
+    function calcularPorReferencia() {
+      const dataReferencia = new Date(document.getElementById("dataReferencia").value);
+      const semanas = parseInt(document.getElementById("semanasRef").value);
+      const dias = parseInt(document.getElementById("diasRef").value);
+      const hoje = new Date();
+
+      if (isNaN(dataReferencia) || isNaN(semanas) || isNaN(dias)) {
+        document.getElementById("resultado").innerText = "Preencha todos os campos corretamente.";
+        return;
+      }
+
+      const totalDiasGestacionais = (semanas * 7) + dias;
+      const dataDumEstimativa = new Date(dataReferencia);
+      dataDumEstimativa.setDate(dataReferencia.getDate() - totalDiasGestacionais);
+
+      const diffTempo = hoje - dataDumEstimativa;
+      const diffDias = Math.floor(diffTempo / (1000 * 60 * 60 * 24));
+      const semanasAtuais = Math.floor(diffDias / 7);
+      const diasRestantes = diffDias % 7;
+
+      if (diffDias < 0) {
+        document.getElementById("resultado").innerText = "A data de referência não pode estar no futuro em relação à DUM estimada.";
+        return;
+      }
+
+      document.getElementById("resultado").innerText =
+        `Com base na data de referência, a paciente está com ${semanasAtuais} semana(s) e ${diasRestantes} dia(s) de gestação.`;
+    }
   </script>
 </body>
-
-<footer>
-  <p>© 2025 - Desenvolvido por Murilo Della Justina</p>
-</footer>
 </html>
+
