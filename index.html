@@ -108,14 +108,54 @@
         height: 50px;
         max-width: 80px;
       }
-      
+
       .container {
         margin: 30px 15px;
         padding: 30px 20px;
       }
 
-      h1, h2 {
+      h1 {
+        font-size: 22px;
+      }
+
+      p, .resultado {
+        font-size: 16px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    header img {
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    }
+
+      .container {
+        padding: 25px 15px;
+      }
+
+      h1 {
         font-size: 20px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 10px;
       }
     }
   </style>
