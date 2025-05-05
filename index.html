@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -19,17 +19,19 @@
 
     header {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      padding: 15px 30px;
+      gap: 40px;
+      padding: 20px 30px;
       background-color: #ffffff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     header img {
-      height: 60px;
+      max-height: 80px;
+      height: auto;
       width: auto;
-      max-width: 100px;
+      object-fit: contain;
     }
 
     .container {
@@ -100,13 +102,13 @@
     @media (max-width: 768px) {
       header {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
+        gap: 20px;
         padding: 15px 20px;
       }
 
       header img {
-        height: 50px;
-        max-width: 80px;
+        max-height: 60px;
       }
 
       .container {
@@ -130,20 +132,14 @@
 
     @media (max-width: 480px) {
       header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background-color: #ffffff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+      }
 
-    header img {
-    max-height: 80px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    }
+      header img {
+        max-height: 60px;
+      }
 
       .container {
         padding: 25px 15px;
@@ -162,7 +158,9 @@
 </head>
 <body>
   <header>
+    <a href="https://www.instagram.com/cis_amures/r" target="_blank">
     <img src="img/cis-2.0_resized.png" alt="Logo-cis">
+  </a>
     <img src="img/sus-sistema-unico-de-saude-1024.png" alt="Logo-sus">
   </header>
 
@@ -244,5 +242,7 @@
     }
   </script>
 </body>
+</html>
+
 </html>
 
